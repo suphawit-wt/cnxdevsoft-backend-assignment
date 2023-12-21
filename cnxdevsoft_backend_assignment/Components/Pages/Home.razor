@@ -1,0 +1,83 @@
+﻿@page "/"
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using cnxdevsoft_backend_assignment.Models
+@inject HttpClient httpClient
+
+<PageTitle>Math Operation</PageTitle>
+
+<div class="container mt-3">
+    <h1>Math Operation</h1>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <form>
+                <div class="mb-3">
+                    <label for="x_input" class="form-label">X</label>
+                    <input type="text" class="form-control" id="x_input" placeholder="X" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Operator</label>
+                    <select class="form-select" required>
+                        <option value="add">+</option>
+                        <option value="sub">-</option>
+                        <option value="mul">*</option>
+                        <option value="div">/</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="y_input" class="form-label">Y</label>
+                    <input type="text" class="form-control" id="y_input" placeholder="Y" required>
+                </div>
+                <button class="btn btn-primary btn-md" type="submit">Calculate</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <h3>Result:</h3>
+
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (mathOperations is null)
+            {
+                <p>Unable to get Math Operations in Database.</p>
+            }
+            else {
+                @foreach (var mathOp in mathOperations)
+                {
+                    string operatorSymbol = "";
+
+                    if (mathOp.Operator == "add")
+                    {
+                        operatorSymbol = "+";
+                    }
+                    else if (mathOp.Operator == "sub")
+                    {
+                        operatorSymbol = "-";
+                    }
+                    else if (mathOp.Operator == "mul")
+                    {
+                        operatorSymbol = "*";
+                    }
+                    else if (mathOp.Operator == "div")
+                    {
+                        operatorSymbol = "/";
+                    }
+
+                    <div class="alert alert-primary" role="alert">
+                        @mathOp.X @operatorSymbol @mathOp.Y = @mathOp.Result
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<MathOperation> mathOperations = new List<MathOperation>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        mathOperations = await httpClient.GetFromJsonAsync<List<MathOperation>>("https://localhost:7171/api/math") ?? new List<MathOperation>();
+    }
+}
