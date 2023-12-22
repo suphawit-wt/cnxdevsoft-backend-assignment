@@ -7,9 +7,9 @@
 - ORM: Entity Framework
 - API Documentation: Swagger
 
-## Getting Started
+### Getting Started
 
-### First, Edit SQL Server connection in "appsettings.json" to your Username and Password
+First, Edit SQL Server connection in "appsettings.json" to your Username and Password
 
 ```json
 "ConnectionStrings": {
@@ -17,13 +17,12 @@
   }
 ```
 
-### Then, Create Database and Schema with EF Migrations
+Then, Create Database and Schema with EF Migrations
 
 ```bash
 dotnet ef database update
 ```
 
-### Now, You can start the application and
-
-Open [https://localhost:7171](https://localhost:7171) to use Blazor Web App for Math Operation Form
-Open [https://localhost:7171/swagger](https://localhost:7171/swagger) to use Swagger API Document
+Now, You can start the application and
+Open [https://localhost:7171](https://localhost:7171) to use Blazor Web App for Math Operation Form \
+or Open [https://localhost:7171/swagger](https://localhost:7171/swagger) to use Swagger API Document
