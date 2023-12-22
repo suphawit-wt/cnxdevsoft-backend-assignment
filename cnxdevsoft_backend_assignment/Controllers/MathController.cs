@@ -1,9 +1,6 @@
-﻿using cnxdevsoft_backend_assignment.Data;
-using cnxdevsoft_backend_assignment.Models;
-using cnxdevsoft_backend_assignment.Models.Requests;
+﻿using cnxdevsoft_backend_assignment.Models;
 using cnxdevsoft_backend_assignment.Models.Responses;
 using cnxdevsoft_backend_assignment.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cnxdevsoft_backend_assignment.Controllers
@@ -22,11 +19,28 @@ namespace cnxdevsoft_backend_assignment.Controllers
         [HttpGet]
         public async Task<ActionResult<List<MathOperation>>> GetAll()
         {
-            return await _mathService.GetAll();
+            try
+            {
+                return await _mathService.GetAll();
+            }
+            catch (Exception ex)
+            {
+                ApiResponse response = new()
+                {
+                    StatusCode = 500,
+                    Message = "Internal Server Error"
+                };
+
+                switch (ex.Message)
+                {
+                    default:
+                        return StatusCode(500, response);
+                }
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> Create([FromBody] MathCalculateRequest request)
+        public async Task<ActionResult<ApiResponse>> Create([FromBody] MathOperation request)
         {
             try
             {

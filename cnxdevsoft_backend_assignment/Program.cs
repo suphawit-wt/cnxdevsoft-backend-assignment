@@ -11,7 +11,7 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Add Controllers
+// Add Controllers and Http Client
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
@@ -37,7 +37,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-else {
+else
+{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {

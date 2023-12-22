@@ -1,7 +1,5 @@
 ﻿using cnxdevsoft_backend_assignment.Data;
 using cnxdevsoft_backend_assignment.Models;
-using cnxdevsoft_backend_assignment.Models.Requests;
-using cnxdevsoft_backend_assignment.Models.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace cnxdevsoft_backend_assignment.Services
@@ -15,7 +13,7 @@ namespace cnxdevsoft_backend_assignment.Services
             _dbContext = dbContext;
         }
 
-        public double CalculateXY(MathCalculateRequest request)
+        public double CalculateXY(MathOperation request)
         {
             double calculateResult;
 
