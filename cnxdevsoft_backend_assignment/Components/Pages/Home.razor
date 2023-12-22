@@ -3,6 +3,7 @@
 @using System.Text.Json.Serialization
 @using cnxdevsoft_backend_assignment.Models
 @inject HttpClient httpClient
+@inject NavigationManager navigationManager;
 
 <PageTitle>Math Operation</PageTitle>
 
@@ -11,26 +12,31 @@
 
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-12">
-            <form>
+            <EditForm Model="@mathOperation" OnValidSubmit="CreateMathOperation" FormName="mathOpsCreate">
+                <DataAnnotationsValidator />
                 <div class="mb-3">
-                    <label for="x_input" class="form-label">X</label>
-                    <input type="text" class="form-control" id="x_input" placeholder="X" required>
+                    <label for="X" class="form-label">X</label>
+                    <InputNumber @bind-Value="mathOperation.X" class="form-control"/>
+                    <ValidationMessage For="@(() => mathOperation.X)"></ValidationMessage>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Operator</label>
-                    <select class="form-select" required>
+                    <label for="Operator" class="form-label">Operator</label>
+                    <InputSelect @bind-Value="mathOperation.Operator" class="form-select">
+                        <option>Please select operator.</option>
                         <option value="add">+</option>
                         <option value="sub">-</option>
                         <option value="mul">*</option>
                         <option value="div">/</option>
-                    </select>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => mathOperation.Operator)"></ValidationMessage>
                 </div>
                 <div class="mb-3">
-                    <label for="y_input" class="form-label">Y</label>
-                    <input type="text" class="form-control" id="y_input" placeholder="Y" required>
+                    <label for="Y" class="form-label">Y</label>
+                    <InputNumber @bind-Value="mathOperation.Y" class="form-control" />
+                    <ValidationMessage For="@(() => mathOperation.Y)"></ValidationMessage>
                 </div>
                 <button class="btn btn-primary btn-md" type="submit">Calculate</button>
-            </form>
+            </EditForm>
         </div>
     </div>
 
@@ -74,10 +80,18 @@
 </div>
 
 @code {
-    private List<MathOperation> mathOperations = new List<MathOperation>();
+    MathOperation mathOperation = new();
+
+    private List<MathOperation> mathOperations = new();
 
     protected override async Task OnInitializedAsync()
     {
         mathOperations = await httpClient.GetFromJsonAsync<List<MathOperation>>("https://localhost:7171/api/math") ?? new List<MathOperation>();
+    }
+
+    private async Task CreateMathOperation()
+    {
+        await httpClient.PostAsJsonAsync<MathOperation>("https://localhost:7171/api/math", mathOperation);
+        navigationManager.NavigateTo(navigationManager.Uri, forceLoad: true);
     }
 }

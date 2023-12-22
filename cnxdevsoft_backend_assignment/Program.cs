@@ -15,13 +15,17 @@ builder.Services.AddRazorComponents()
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
+// Add Swagger API Document
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Math Operation API", Version = "v1" });
 });
+
+// Add Database Context
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration.GetConnectionString("connSQLServer")));
 
+// Add Scoped for Services
 builder.Services.AddScoped<IMathService, MathService>();
 
 var app = builder.Build();

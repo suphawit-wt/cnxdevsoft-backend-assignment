@@ -8,13 +8,12 @@ namespace cnxdevsoft_backend_assignment.Models
     {
         [Key]
         public Int64 Id { get; set; }
-        [JsonRequired]
-        public required int X { get; set; }
-        [JsonRequired]
-        public required int Y { get; set; }
-        [JsonRequired]
-        public required string Operator { get; set; }
-        [JsonRequired]
-        public required double Result { get; set; }
+        [Required(ErrorMessage = "Please enter {0}.")]
+        public int X { get; set; }
+        [Required(ErrorMessage = "Please enter {0}.")]
+        public int Y { get; set; }
+        [Required(ErrorMessage = "Please select {0}.")]
+        public string? Operator { get; set; }
+        public double Result { get; set; }
     }
 }

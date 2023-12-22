@@ -25,8 +25,8 @@ namespace cnxdevsoft_backend_assignment.Controllers
             return await _mathService.GetAll();
         }
 
-        [HttpPost("Calculate")]
-        public async Task<ActionResult<ApiResponse>> CalculateXY([FromQuery] MathCalculateRequest request)
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse>> Create([FromBody] MathCalculateRequest request)
         {
             try
             {

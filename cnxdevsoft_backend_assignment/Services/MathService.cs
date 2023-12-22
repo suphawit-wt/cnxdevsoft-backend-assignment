@@ -45,7 +45,7 @@ namespace cnxdevsoft_backend_assignment.Services
 
         public async Task<List<MathOperation>> GetAll()
         {
-            List<MathOperation> mathOperations = await _dbContext.MathOperations.ToListAsync();
+            List<MathOperation> mathOperations = await _dbContext.MathOperations.OrderByDescending(m => m.Id).ToListAsync();
 
             return mathOperations;
         }
