@@ -14,7 +14,7 @@ First, Edit SQL Server connection in "appsettings.json" to your Username and Pas
 ```json
 "ConnectionStrings": {
     "connSQLServer": "Server=localhost\\SQLEXPRESS;Database=mathop_db;User Id=<username>;Password=<password>;TrustServerCertificate=True;MultipleActiveResultSets=true;"
-  }
+}
 ```
 
 Then, Create Database and Schema with EF Migrations
